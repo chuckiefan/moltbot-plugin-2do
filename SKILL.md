@@ -92,3 +92,11 @@ bash {baseDir}/scripts/send-task.sh --title "完成季度报告" --list "工作"
 - `SMTP_PORT` - SMTP 端口（587 或 465）
 - `SMTP_USER` - SMTP 用户名
 - `SMTP_PASS` - SMTP 密码（推荐使用应用专用密码）
+
+### 可选配置
+
+- `TITLE_PREFIX` - 邮件标题前缀，用于匹配 2Do 中的邮件捕获规则
+
+如果配置了 `TITLE_PREFIX`，所有发送的邮件标题会自动添加该前缀。例如设置 `TITLE_PREFIX="2Do:"`，则任务"开会"的邮件标题会变为 `2Do:开会 list(...) tag(...)`。
+
+此功能可以帮助你在 2Do 中设置更精确的邮件捕获规则，只捕获带有特定前缀的邮件。

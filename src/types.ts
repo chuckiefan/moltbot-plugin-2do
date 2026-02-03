@@ -24,6 +24,8 @@ export interface AppConfig {
     twodoEmail: string;
     /** SMTP 配置 */
     smtp: SmtpConfig;
+    /** 邮件标题前缀（用于匹配 2Do 捕获规则） */
+    titlePrefix?: string;
 }
 
 /** 邮件发送结果 */

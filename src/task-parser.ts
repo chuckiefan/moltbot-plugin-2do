@@ -77,7 +77,7 @@ export function parseTask(input: string): ParsedTask {
 }
 
 /** 构造 2Do 邮件主题 */
-export function buildEmailSubject(task: ParsedTask): string {
+export function buildEmailSubject(task: ParsedTask, titlePrefix?: string): string {
     let subject = task.title;
 
     if (task.list) {
@@ -86,6 +86,11 @@ export function buildEmailSubject(task: ParsedTask): string {
 
     if (task.tags && task.tags.length > 0) {
         subject += ` tag(${task.tags.join(", ")})`;
+    }
+
+    // 如果配置了标题前缀，添加到开头
+    if (titlePrefix) {
+        subject = `${titlePrefix}${subject}`;
     }
 
     return subject;
