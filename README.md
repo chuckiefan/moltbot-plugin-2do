@@ -6,10 +6,12 @@
 
 ## 功能
 
-- 解析中文自然语言任务描述
+- 解析中文自然语言任务描述（支持多种表达方式）
 - 支持指定目标列表和标签
+- 支持邮件标题前缀配置（用于精确匹配 2Do 捕获规则）
 - 通过 SMTP 邮件发送到 2Do
 - 支持所有 Moltbot 消息渠道
+- 智能触发词识别（中英文双语支持）
 
 ## 使用示例
 
@@ -65,7 +67,8 @@ npm run build
           "SMTP_HOST": "smtp.gmail.com",
           "SMTP_PORT": "587",
           "SMTP_USER": "your-email@gmail.com",
-          "SMTP_PASS": "your-app-specific-password"
+          "SMTP_PASS": "your-app-specific-password",
+          "TITLE_PREFIX": "2Do:"
         }
       }
     }
@@ -73,13 +76,20 @@ npm run build
 }
 ```
 
-| 环境变量 | 说明 |
-|---------|------|
-| `TWODO_EMAIL` | 2Do 中配置的接收邮箱地址 |
-| `SMTP_HOST` | SMTP 服务器地址 |
-| `SMTP_PORT` | SMTP 端口（587 为 STARTTLS，465 为 SSL） |
-| `SMTP_USER` | SMTP 用户名 |
-| `SMTP_PASS` | SMTP 密码（推荐使用[应用专用密码](https://support.google.com/accounts/answer/185833)） |
+| 环境变量 | 说明 | 必需 |
+|---------|------|------|
+| `TWODO_EMAIL` | 2Do 中配置的接收邮箱地址 | 是 |
+| `SMTP_HOST` | SMTP 服务器地址（如 smtp.gmail.com） | 是 |
+| `SMTP_PORT` | SMTP 端口（587 为 STARTTLS，465 为 SSL） | 是 |
+| `SMTP_USER` | SMTP 用户名 | 是 |
+| `SMTP_PASS` | SMTP 密码（推荐使用[应用专用密码](https://support.google.com/accounts/answer/185833)） | 是 |
+| `TITLE_PREFIX` | 邮件标题前缀，用于匹配 2Do 邮件捕获规则（可选） | 否 |
+
+### 可选配置说明
+
+**TITLE_PREFIX**：如果配置了此参数，所有发送的邮件标题会自动添加该前缀。例如设置 `TITLE_PREFIX="2Do:"`，则任务"开会"的邮件标题会变为 `2Do:开会 list(...) tag(...)`。
+
+此功能可以帮助你在 2Do 中设置更精确的邮件捕获规则，只捕获带有特定前缀的邮件，避免其他邮件被误捕获。
 
 ### 配置 2Do App
 
@@ -103,6 +113,16 @@ npm run build
   - 标签指定（"标签是X和Y"）
   - 2Do 邮件格式构造
   - SMTP 邮件发送（支持 TLS/SSL）
+
+- ✅ 邮件标题前缀功能
+  - 可配置 TITLE_PREFIX 环境变量
+  - 自动在邮件标题前添加指定前缀
+  - 帮助精确匹配 2Do 邮件捕获规则
+
+- ✅ 智能触发词识别
+  - 中文触发词支持（添加任务、创建待办、提醒我、记录任务、新建任务、加个任务）
+  - 英文触发词支持（Add task、Create todo、Remind me to、Remember to）
+  - 灵活的自然语言输入处理
 
 - ✅ 测试覆盖
   - 14 个单元测试全部通过
