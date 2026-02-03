@@ -1,6 +1,6 @@
 ---
 name: moltbot-plugin-2do
-description: Create tasks from natural language and send to 2Do app via email. Use when user wants to add a task, create a todo, or set a reminder.
+description: 通过自然语言创建任务并发送到 2Do app。当用户说"添加任务"、"创建待办"、"提醒我"、"记录任务"、"新建任务"、"加个任务"等，或想要 add a task、create a todo、set a reminder 时使用。
 emoji: ✅
 version: 1.0.0
 author: chuckiefan
@@ -14,6 +14,24 @@ metadata:
 通过自然语言创建任务并自动发送到你的 2Do app。
 
 ## 使用方式
+
+### 触发关键词
+
+当用户使用以下任何表达时，都应该触发此 Skill：
+
+**中文触发词：**
+- "添加任务：..."
+- "创建待办：..."
+- "提醒我：..."
+- "记录任务：..."
+- "新建任务：..."
+- "加个任务：..."
+
+**英文触发词：**
+- "Add task: ..."
+- "Create todo: ..."
+- "Remind me to: ..."
+- "Remember to: ..."
 
 ### 基本用法
 
