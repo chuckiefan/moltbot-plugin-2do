@@ -227,19 +227,19 @@ describe("buildEmailSubject", () => {
     it("应包含仅日期的 due()", () => {
         const dueDate = new Date(2026, 1, 5, 0, 0);
         const subject = buildEmailSubject({ title: "买菜", dueDate });
-        expect(subject).toBe("买菜 due(2-5-26)");
+        expect(subject).toBe("买菜 due(2-5-2026)");
     });
 
     it("应包含带时间的 start() 和 due()", () => {
         const dueDate = new Date(2026, 1, 5, 15, 0);
         const subject = buildEmailSubject({ title: "开会", dueDate });
-        expect(subject).toBe("开会 start(2-5-26 3pm) due(2-5-26 3pm)");
+        expect(subject).toBe("开会 start(2-5-2026 3pm) due(2-5-2026 3pm)");
     });
 
     it("应包含带分钟的 start() 和 due()", () => {
         const dueDate = new Date(2026, 1, 5, 15, 30);
         const subject = buildEmailSubject({ title: "开会", dueDate });
-        expect(subject).toBe("开会 start(2-5-26 3:30pm) due(2-5-26 3:30pm)");
+        expect(subject).toBe("开会 start(2-5-2026 3:30pm) due(2-5-2026 3:30pm)");
     });
 
     it("应同时包含日期、列表和标签", () => {
@@ -250,7 +250,7 @@ describe("buildEmailSubject", () => {
             list: "工作",
             tags: ["紧急"],
         });
-        expect(subject).toBe("完成报告 start(2-5-26 2pm) due(2-5-26 2pm) list(工作) tag(紧急)");
+        expect(subject).toBe("完成报告 start(2-5-2026 2pm) due(2-5-2026 2pm) list(工作) tag(紧急)");
     });
 
     it("应支持 titlePrefix", () => {

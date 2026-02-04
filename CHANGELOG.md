@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.2] - 2026-02-04
+
+### Fixed
+
+- 修复 2Do 日期格式使用 2 位年份导致在某些 locale 下被错误解析的问题
+  - 将 `format2DoDate` 输出格式从 `M-D-YY`（如 `2-5-26`）改为 `M-D-YYYY`（如 `2-5-2026`）
+  - 避免 2Do app 将日期误解析为错误的年/月/日
+
 ## [1.0.1] - 2026-02-04
 
 ### Added

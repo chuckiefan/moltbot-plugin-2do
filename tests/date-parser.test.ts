@@ -151,38 +151,38 @@ describe("formatDueDate", () => {
 });
 
 describe("format2DoDate", () => {
-    it("应格式化仅日期为 M-D-YY", () => {
+    it("应格式化仅日期为 M-D-YYYY", () => {
         const d = new Date(2026, 1, 5);
-        expect(format2DoDate(d, false)).toBe("2-5-26");
+        expect(format2DoDate(d, false)).toBe("2-5-2026");
     });
 
-    it("应格式化下午整点为 M-D-YY Hpm", () => {
+    it("应格式化下午整点为 M-D-YYYY Hpm", () => {
         const d = new Date(2026, 1, 5, 15, 0);
-        expect(format2DoDate(d, true)).toBe("2-5-26 3pm");
+        expect(format2DoDate(d, true)).toBe("2-5-2026 3pm");
     });
 
-    it("应格式化上午整点为 M-D-YY Ham", () => {
+    it("应格式化上午整点为 M-D-YYYY Ham", () => {
         const d = new Date(2026, 1, 5, 10, 0);
-        expect(format2DoDate(d, true)).toBe("2-5-26 10am");
+        expect(format2DoDate(d, true)).toBe("2-5-2026 10am");
     });
 
-    it("应格式化带分钟的时间为 M-D-YY H:MMam/pm", () => {
+    it("应格式化带分钟的时间为 M-D-YYYY H:MMam/pm", () => {
         const d = new Date(2026, 1, 5, 15, 30);
-        expect(format2DoDate(d, true)).toBe("2-5-26 3:30pm");
+        expect(format2DoDate(d, true)).toBe("2-5-2026 3:30pm");
     });
 
     it("应将 12 点格式化为 12pm", () => {
         const d = new Date(2026, 1, 5, 12, 0);
-        expect(format2DoDate(d, true)).toBe("2-5-26 12pm");
+        expect(format2DoDate(d, true)).toBe("2-5-2026 12pm");
     });
 
     it("应将 0 点格式化为 12am", () => {
         const d = new Date(2026, 1, 5, 0, 0);
-        expect(format2DoDate(d, true)).toBe("2-5-26 12am");
+        expect(format2DoDate(d, true)).toBe("2-5-2026 12am");
     });
 
     it("应格式化带前导零分钟", () => {
         const d = new Date(2026, 1, 5, 20, 5);
-        expect(format2DoDate(d, true)).toBe("2-5-26 8:05pm");
+        expect(format2DoDate(d, true)).toBe("2-5-2026 8:05pm");
     });
 });
