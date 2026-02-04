@@ -151,11 +151,11 @@ export function formatDueDate(date: Date, hasTime: boolean): string {
     return `${y}-${m}-${d} ${h}:${min}`;
 }
 
-/** 格式化日期为 2Do 邮件主题中 start()/due() 接受的格式：M-D-YY 或 M-D-YY Ham/pm */
+/** 格式化日期为 2Do 邮件主题中 start()/due() 接受的格式：M-D-YYYY 或 M-D-YYYY Ham/pm */
 export function format2DoDate(date: Date, hasTime: boolean): string {
     const m = date.getMonth() + 1;
     const d = date.getDate();
-    const y = date.getFullYear() % 100;
+    const y = date.getFullYear();
     if (!hasTime) return `${m}-${d}-${y}`;
 
     let hours = date.getHours();
