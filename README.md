@@ -9,6 +9,7 @@
 - 自然语言意图识别 — 无需固定命令前缀，自然表达即可触发
 - 中英文双语解析（中文 + 英文命令前缀）
 - 日期/时间提取（明天、下周五、下午3点等）
+- 自动设置 2Do 开始时间和截止时间（通过 `start()`/`due()` 格式）
 - 优先级识别（紧急/重要/urgent/important）
 - 支持指定目标列表和标签
 - 支持邮件标题前缀配置（用于精确匹配 2Do 捕获规则）
@@ -33,7 +34,7 @@
 
 > remind me to call John tomorrow
 
-**日期/时间：**
+**日期/时间（自动设置 2Do 开始/截止时间）：**
 
 > 添加任务：明天下午3点开会
 
@@ -63,7 +64,7 @@
 
 > 添加任务：明天完成季度报告，列表是工作，标签是紧急和财务
 
-## 安装
+## 安装与更新
 
 ### 前置条件
 
@@ -72,9 +73,19 @@
 - 2Do app 已配置 Email to 2Do 功能
 - 可用的 SMTP 邮箱账户
 
-### 安装到 Moltbot
+### 方式一：通过 ClawHub 安装（推荐）
 
-将本项目克隆到 Moltbot 的 skills 目录：
+访问 ClawHub 插件页面安装或更新：
+
+[https://clawhub.ai/chuckiefan/moltbot-plugin-2do](https://clawhub.ai/chuckiefan/moltbot-plugin-2do)
+
+按页面提示完成安装即可。后续更新也可通过 ClawHub 页面进行。
+
+### 方式二：通过 Git 手动安装
+
+将项目克隆到 Moltbot 的 skills 目录：
+
+**从 GitHub 安装：**
 
 ```bash
 cd ~/.openclaw/skills
@@ -83,6 +94,29 @@ cd moltbot-plugin-2do
 npm install
 npm run build
 ```
+
+**从 Gitee 安装（国内推荐）：**
+
+```bash
+cd ~/.openclaw/skills
+git clone https://gitee.com/akenz/moltbot-plugin-2do.git
+cd moltbot-plugin-2do
+npm install
+npm run build
+```
+
+**更新已安装的插件：**
+
+```bash
+cd ~/.openclaw/skills/moltbot-plugin-2do
+git pull
+npm install
+npm run build
+```
+
+> 如果同时配置了 GitHub 和 Gitee 远程仓库，可以指定拉取来源：
+> - GitHub：`git pull origin master`
+> - Gitee：`git pull gitee master`
 
 ### 配置
 
@@ -133,86 +167,67 @@ npm run build
 
 ## 项目状态
 
-### 当前版本：v2.0.0
+### 当前版本：v1.0.1
 
 **已完成功能**：
 
-- ✅ 核心 MVP 功能
+- 核心 MVP 功能
   - 自然语言任务解析（支持多种中文表达方式）
   - 列表指定（"到X列表"、"列表是X"、", list X"）
   - 标签指定（"标签是X和Y"、", tag X and Y"）
   - 2Do 邮件格式构造
   - SMTP 邮件发送（支持 TLS/SSL）
 
-- ✅ 邮件标题前缀功能
+- 2Do 日期/时间集成
+  - 任务日期自动转换为 2Do 的 `start()`/`due()` 格式
+  - 仅日期时设置截止时间：`due(M-D-YY)`
+  - 含时间时同时设置开始和截止时间：`start(M-D-YY Ham/pm) due(M-D-YY Ham/pm)`
+
+- 邮件标题前缀功能
   - 可配置 TITLE_PREFIX 环境变量
   - 自动在邮件标题前添加指定前缀
   - 帮助精确匹配 2Do 邮件捕获规则
 
-- ✅ 广泛的意图识别
+- 广泛的意图识别
   - 基于 AgentSkills 规范的 description 触发机制
   - 支持固定前缀触发（添加任务、创建待办、提醒我等）
   - 支持自然表达触发（帮我记一下、别忘了、明天要...等）
   - 无需固定命令格式，自然对话即可创建任务
 
-- ✅ 日期/时间提取
+- 日期/时间提取
   - 相对日期：今天、明天、后天、大后天
   - 星期表达：周一~周日、下周X、星期X
   - 具体日期：X月X日/号
   - 时间：上午/下午/晚上 X点 X分/半
   - 日期+时间组合：明天下午3点
-  - 自动记录到邮件正文
 
-- ✅ 中英文双语支持
+- 中英文双语支持
   - 英文命令前缀：add task、create todo、remind me to、remember to
   - 英文列表和标签：, list X、, tag X and Y
   - 大小写不敏感
 
-- ✅ 优先级提取
+- 优先级提取
   - 中文：紧急/加急(高)、重要(中)、不急(低)
   - 英文：urgent(高)、important(中)、low priority(低)
-  - 自动记录到邮件正文
 
-- ✅ 测试覆盖
-  - 59 个单元测试全部通过
-  - 覆盖日期解析、任务解析、邮件构造等核心功能
-
-- ✅ 项目完善
-  - TypeScript 类型安全
-  - 完整的文档和使用示例
-  - 符合 AgentSkills 规范
-  - MIT 开源协议
+- 测试覆盖
+  - 71 个单元测试覆盖核心功能
+  - 覆盖日期解析、2Do 日期格式、任务解析、邮件构造等
 
 **代码质量**：
-- 构建产物：10.81 KB (dist/main.js)
-- 测试覆盖率：核心功能 100%
+- TypeScript 类型安全
+- 完整的文档和使用示例
+- 符合 AgentSkills 规范
+- MIT 开源协议
 
 ### 未来规划
 
-#### Phase 3：高级功能（规划中）
-
-- [ ] 任务确认交互
-  - 发送前预览任务详情
-  - 支持修改后再发送
-
-- [ ] 批量任务添加
-  - 一次解析多个任务
-  - 支持列表格式（"1. 任务一 2. 任务二"）
-
+- [ ] 任务确认交互（发送前预览，支持修改后再发送）
+- [ ] 批量任务添加（一次解析多个任务）
 - [ ] 自定义邮件模板
-  - 支持用户自定义邮件正文格式
-  - 添加任务来源、时间戳等信息
-
-- [ ] 配置验证命令
-  - 测试 SMTP 连接
-  - 验证 2Do 邮箱配置
-
-#### Phase 4：生态完善（长期）
-
+- [ ] 配置验证命令（测试 SMTP 连接）
 - [ ] 发布到 ClawHub 技能市场
-- [ ] 添加更多使用示例和文档
 - [ ] 国际化支持（i18n）
-- [ ] Web Dashboard 配置界面
 
 ---
 

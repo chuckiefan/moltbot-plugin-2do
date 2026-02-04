@@ -56,6 +56,8 @@ Specific dates: X月X日/号
 
 Time: 上午/下午/晚上 X点 X分/半
 
+Extracted dates are automatically converted to 2Do's `start()` and `due()` format in the email subject for proper task scheduling.
+
 ### List and tag assignment
 
 Chinese: "列表是X", "到X列表", "标签是X和Y"

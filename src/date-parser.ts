@@ -150,3 +150,20 @@ export function formatDueDate(date: Date, hasTime: boolean): string {
     const min = String(date.getMinutes()).padStart(2, "0");
     return `${y}-${m}-${d} ${h}:${min}`;
 }
+
+/** 格式化日期为 2Do 邮件主题中 start()/due() 接受的格式：M-D-YY 或 M-D-YY Ham/pm */
+export function format2DoDate(date: Date, hasTime: boolean): string {
+    const m = date.getMonth() + 1;
+    const d = date.getDate();
+    const y = date.getFullYear() % 100;
+    if (!hasTime) return `${m}-${d}-${y}`;
+
+    let hours = date.getHours();
+    const period = hours >= 12 ? "pm" : "am";
+    if (hours > 12) hours -= 12;
+    if (hours === 0) hours = 12;
+
+    const mins = date.getMinutes();
+    if (mins === 0) return `${m}-${d}-${y} ${hours}${period}`;
+    return `${m}-${d}-${y} ${hours}:${String(mins).padStart(2, "0")}${period}`;
+}

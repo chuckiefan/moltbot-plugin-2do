@@ -1,4 +1,4 @@
-import { extractDateTime, formatDueDate } from "./date-parser.js";
+import { extractDateTime, format2DoDate, formatDueDate } from "./date-parser.js";
 import type { ParsedTask, Priority } from "./types.js";
 
 // === 中文前缀模式 ===
@@ -138,6 +138,16 @@ export function parseTask(input: string, now?: Date): ParsedTask {
 /** 构造 2Do 邮件主题 */
 export function buildEmailSubject(task: ParsedTask, titlePrefix?: string): string {
     let subject = task.title;
+
+    // 日期时间 → 2Do 的 start()/due() 格式
+    if (task.dueDate) {
+        const hasTime = task.dueDate.getHours() !== 0 || task.dueDate.getMinutes() !== 0;
+        const dateStr = format2DoDate(task.dueDate, hasTime);
+        if (hasTime) {
+            subject += ` start(${dateStr})`;
+        }
+        subject += ` due(${dateStr})`;
+    }
 
     if (task.list) {
         subject += ` list(${task.list})`;

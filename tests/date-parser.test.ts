@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { extractDateTime, formatDueDate } from "../src/date-parser.js";
+import { extractDateTime, format2DoDate, formatDueDate } from "../src/date-parser.js";
 
 // 固定参考时间：2026-02-04 周三 10:00
 const REF = new Date(2026, 1, 4, 10, 0, 0);
@@ -147,5 +147,42 @@ describe("formatDueDate", () => {
     it("应格式化日期和时间", () => {
         const d = new Date(2026, 1, 5, 15, 30);
         expect(formatDueDate(d, true)).toBe("2026-02-05 15:30");
+    });
+});
+
+describe("format2DoDate", () => {
+    it("应格式化仅日期为 M-D-YY", () => {
+        const d = new Date(2026, 1, 5);
+        expect(format2DoDate(d, false)).toBe("2-5-26");
+    });
+
+    it("应格式化下午整点为 M-D-YY Hpm", () => {
+        const d = new Date(2026, 1, 5, 15, 0);
+        expect(format2DoDate(d, true)).toBe("2-5-26 3pm");
+    });
+
+    it("应格式化上午整点为 M-D-YY Ham", () => {
+        const d = new Date(2026, 1, 5, 10, 0);
+        expect(format2DoDate(d, true)).toBe("2-5-26 10am");
+    });
+
+    it("应格式化带分钟的时间为 M-D-YY H:MMam/pm", () => {
+        const d = new Date(2026, 1, 5, 15, 30);
+        expect(format2DoDate(d, true)).toBe("2-5-26 3:30pm");
+    });
+
+    it("应将 12 点格式化为 12pm", () => {
+        const d = new Date(2026, 1, 5, 12, 0);
+        expect(format2DoDate(d, true)).toBe("2-5-26 12pm");
+    });
+
+    it("应将 0 点格式化为 12am", () => {
+        const d = new Date(2026, 1, 5, 0, 0);
+        expect(format2DoDate(d, true)).toBe("2-5-26 12am");
+    });
+
+    it("应格式化带前导零分钟", () => {
+        const d = new Date(2026, 1, 5, 20, 5);
+        expect(format2DoDate(d, true)).toBe("2-5-26 8:05pm");
     });
 });
